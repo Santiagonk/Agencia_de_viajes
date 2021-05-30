@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>Predicciones de una Agencia de Viajes</title>
+</head>
+<body>
+    <form id = 'informationForm'>
+        <div class="mb-3">
+            <label for="duracionEstadia" class="form-label form-control-sm" placeholder=".form-control-sm">Duración Estadia</label>
+            <input type="text" class="form-control" id="duracionEstadia">
+        </div>
+        <div class="mb-3">
+            <label for="genero" class="form-label form-control-sm" placeholder=".form-control-sm">Genero</label>
+            <input class="form-control" list="genre" id="genero">
+        <datalist id="genre">
+            <option value="M">
+            <option value="F">
+        </datalist>
+        </div>
+        <div class="mb-3">
+            <label for="edadReserva" class="form-label form-control-sm" placeholder=".form-control-sm">Edad</label>
+            <input type="text" class="form-control" id="edadReserva">
+        </div>
+        <div class="mb-3">
+            <label for="destino" class="form-label form-control-sm" placeholder=".form-control-sm">Destino</label>
+            <input class="form-control" list="countriesList" id="destino">
+        <datalist id="countriesList">
+            <option value="US">
+            <option value="COL">
+            <option value="IT">
+            <option value="AR">
+            <option value="NL">
+            <option value="PE">
+            <option value="UK">
+            <option value="ES">
+        </datalist>
+        </div>
+        <div class="mb-3">
+            <label for="ninos" class="form-label form-control-sm" placeholder=".form-control-sm">Niños</label>
+            <input class="form-control" list="ninoslist" id="ninos">
+        <datalist id="ninoslist">
+            <option value="SI">
+            <option value="NO">
+        </datalist>
+        </div>
+        <button type="button" class="btn btn-primary" id="SendForm">Submit</button>
+    </form>
+</body>
+
+<script>
+    const sendForm = document.getElementById( 'SendForm');
+
+    sendForm.addEventListener('click', sendFormValidation);
+
+    function sendFormValidation () {
+        const duracionEstadia = document.getElementById("duracionEstadia").value;
+        const genero = document.getElementById("genero").value;
+        const edad = document.getElementById("edadReserva").value;
+        const destino = document.getElementById("destino").value;
+        const ninos = document.getElementById("ninos").value;
+        let data = {
+            "duracionEstadia" : duracionEstadia,
+            "genero" : genero,
+            "edad" : edad,
+            "destino" : destino,
+            "ninos": ninos
+        }
+        fetch("/predict", {
+            method: "POST",
+            body: JSON.stringify(data)
+        }).then(res=> {
+            console.log("Request complete! response:", res)
+        });
+    }
+</script>
+</html>
