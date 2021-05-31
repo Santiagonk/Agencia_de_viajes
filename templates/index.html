@@ -75,8 +75,16 @@
         fetch("/predict", {
             method: "POST",
             body: JSON.stringify(data)
-        }).then(res=> {
-            console.log("Request complete! response:", res)
+        })
+        .then(res => res.json())
+        .then(data => {
+            const prediction = data.Prediccion
+            if (prediction === 1) {
+                alert('Usa Hotel')
+            } else {
+                alert('Usa AirBnB')
+            }
+            
         });
     }
 </script>
